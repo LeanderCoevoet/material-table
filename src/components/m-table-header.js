@@ -16,8 +16,6 @@ import * as CommonValues from '../utils/common-values';
 export class MTableHeader extends React.Component {
 
     renderHeader() {
-        console.log(this.props.columns)
-
         const size = this.props.options.padding === 'default' ? 'medium' : 'small';
 
         const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))

@@ -365,7 +365,7 @@ export default class DataManager {
           result.source.index,
           result.destination.index
         );
-        this.setData(items)
+        this.setData(items);
 
         return;
     }
