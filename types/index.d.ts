@@ -11,7 +11,7 @@ export interface MaterialTableProps<RowData extends object> {
   components?: Components;
   data: RowData[] | ((query: Query<RowData>) => Promise<QueryResult<RowData>>);
   detailPanel?: ((rowData: RowData) => React.ReactNode) | (DetailPanel<RowData> | ((rowData: RowData) => DetailPanel<RowData>))[];
-  draggable?: Draggable;
+  draggable?: Partial<Draggable>;
   editable?: {
     isEditable?: (rowData: RowData) => boolean;
     isDeletable?: (rowData: RowData) => boolean;
@@ -202,7 +202,6 @@ export interface Options {
   debounceInterval?: number;
   detailPanelType?: ('single' | 'multiple');
   doubleHorizontalScroll?: boolean;
-  draggable?: boolean;
   emptyRowsWhenPaging?: boolean;
   exportAllData?: boolean;
   exportButton?: boolean;
@@ -299,12 +298,12 @@ export interface Localization {
 }
 
 export interface Draggable {
-  cspNonce?: string;
-  disableDefaultDragDropContext?: boolean;
-  isDraggableHeaderActive?: boolean;
-  isDraggableRowActive?: boolean;
-  droppableHeaderId?: string;
-  droppableRowId?: string;
+  cspNonce: string;
+  disableDefaultDragDropContext: boolean;
+  isDraggableHeaderActive: boolean;
+  isDraggableRowActive: boolean;
+  droppableHeaderId: string;
+  droppableRowId: string;
   onDragEnd: (result: DropResult) => void;
 }
 
