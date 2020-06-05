@@ -82,7 +82,7 @@ export default class MTableBodyRow extends React.Component {
     const width = CommonValues.baseIconSize(this.props);
 
     return (
-      <TableCell size={size} padding="none" key="key-actions-column" style={{
+      <TableCell size={size} padding="none" key="key-draggable-column" style={{
         width: width,
         padding: '0px 5px',
         boxSizing: 'border-box', ...this.props.options.actionsCellStyle

@@ -113,7 +113,7 @@ export class MTableHeader extends React.Component {
     const width = CommonValues.actionsColumnWidth(this.props);
     return (
       <TableCell
-        key="key-actions-column"
+        key="key-draggable-column"
         padding="checkbox"
         className={this.props.classes.header}
         style={{ ...this.props.headerStyle, width: width, textAlign: 'center', boxSizing: 'border-box' }}
