@@ -202,8 +202,8 @@ export default class MaterialTable extends React.Component {
 
   isOutsidePageNumbers = (props) => (props.page !== undefined && props.totalCount !== undefined);
 
-  onAllSelected = (checked) => {
-    this.dataManager.changeAllSelected(checked);
+  onAllSelected = (checked, disabled) => {
+    this.dataManager.changeAllSelected(checked, disabled);
     this.setState(this.dataManager.getRenderState(), () => this.onSelectionChange());
   }
 
@@ -385,7 +385,7 @@ export default class MaterialTable extends React.Component {
       this.props.data(query).then((result) => {
         query.totalCount = result.totalCount;
         query.page = result.page;
-        this.dataManager.setData(result.data);
+        this.dataManager.setData(result.data, this.props.options.selectionDisabled);
         this.setState({
           isLoading: false,
           ...this.dataManager.getRenderState(),
@@ -557,6 +557,7 @@ export default class MaterialTable extends React.Component {
           detailPanelColumnAlignment={props.options.detailPanelColumnAlignment}
           showActionsColumn={props.actions && props.actions.filter(a => a.position === "row" || typeof a === "function").length > 0}
           showSelectAllCheckbox={props.options.showSelectAllCheckbox}
+          selectionDisabled={props.options.selectionDisabled}
           orderBy={this.state.orderBy}
           orderDirection={this.state.orderDirection}
           onAllSelected={this.onAllSelected}

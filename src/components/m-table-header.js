@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import { Tooltip } from '@material-ui/core';
 import * as CommonValues from '../utils/common-values';
 /* eslint-enable no-unused-vars */
@@ -117,7 +117,9 @@ export class MTableHeader extends React.Component {
           <Checkbox
             indeterminate={this.props.selectedCount > 0 && this.props.selectedCount < this.props.dataCount}
             checked={this.props.dataCount > 0 && this.props.selectedCount === this.props.dataCount}
-            onChange={(event, checked) => this.props.onAllSelected && this.props.onAllSelected(checked)}
+            onChange={(event, checked) => {
+              return this.props.onAllSelected && this.props.onAllSelected(checked, this.props.selectionDisabled);
+            }}
           />
         }
       </TableCell>
@@ -220,6 +222,7 @@ MTableHeader.propTypes = {
   actionsHeaderIndex: PropTypes.number,
   showActionsColumn: PropTypes.bool,
   showSelectAllCheckbox: PropTypes.bool,
+  selectionDisabled: PropTypes.func,
   draggable: PropTypes.bool,
   thirdSortClick: PropTypes.bool,
   tooltip: PropTypes.string

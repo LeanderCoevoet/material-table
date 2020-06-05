@@ -46,12 +46,11 @@ export default class MTableBodyRow extends React.Component {
   }
   renderSelectionColumn() {
     let checkboxProps = this.props.options.selectionProps || {};
-    let selectionDisabledIcon;
+    const disabled = this.props.options.selectionDisabled && this.props.options.selectionDisabled(this.props.data);
+    let selectionDisabledIcon = this.props.options.selectionDisabledIcon;
+
     if (typeof checkboxProps === 'function') {
       checkboxProps = checkboxProps(this.props.data);
-      if (checkboxProps.disabled && this.props.options.selectionDisabledIcon) {
-        selectionDisabledIcon = this.props.options.selectionDisabledIcon;
-      }
     }
 
     const size = CommonValues.elementSize(this.props);
@@ -66,12 +65,15 @@ export default class MTableBodyRow extends React.Component {
 
     return (
       <TableCell size={size} padding="none" key="key-selection-column" style={{ width: selectionWidth }}>
-        {selectionDisabledIcon || <Checkbox
+        {disabled ? (selectionDisabledIcon || <div/>) : <Checkbox
           size={size}
-          checked={this.props.data.tableData.checked === true}
+          checked={!!this.props.data.tableData.checked}
           onClick={(e) => e.stopPropagation()}
           value={this.props.data.tableData.id.toString()}
-          onChange={(event) => this.props.onRowSelected(event, this.props.path, this.props.data)}
+          onChange={(event) => {
+            const { options, data, onRowSelected, path } = this.props;
+            return !(options.selectionDisabled && options.selectionDisabled(data)) && onRowSelected(event, path, data);
+          }}
           style={styles}
           {...checkboxProps}
         />}

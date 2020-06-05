@@ -86,7 +86,9 @@ class App extends Component {
                       left: 2,
                       right: 0
                     },
-                    tableLayout: 'fixed'
+                    tableLayout: 'fixed',
+                    selection: true,
+                    selectionDisabled: data => data.id === 1,
                   }}
                 />
               </Grid>

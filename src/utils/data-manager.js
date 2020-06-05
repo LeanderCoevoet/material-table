@@ -199,7 +199,7 @@ export default class DataManager {
     }
   }
 
-  changeAllSelected(checked) {
+  changeAllSelected(checked, disabled) {
     let selectedCount = 0;
     if (this.isDataType("group")) {
       const setCheck = (data) => {
@@ -209,8 +209,10 @@ export default class DataManager {
           }
           else {
             element.data.forEach(d => {
-              d.tableData.checked = checked;
-              selectedCount++;
+              if (!(disabled && disabled(d))) {
+                d.tableData.checked = checked;
+                selectedCount++;
+              }
             });
           }
         });
@@ -220,7 +222,9 @@ export default class DataManager {
     }
     else {
       this.searchedData.map(row => {
-        row.tableData.checked = checked;
+        if (!(disabled && disabled(row))) {
+          row.tableData.checked = checked;
+        }
         return row;
       });
       selectedCount = this.searchedData.length;

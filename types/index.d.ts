@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ReactNode } from 'react';
 import { IconProps } from '@material-ui/core/Icon';
 
 export interface MaterialTableProps<RowData extends object> {
@@ -17,7 +18,7 @@ export interface MaterialTableProps<RowData extends object> {
   icons?: Icons;
   isLoading?: boolean;
   title?: string | React.ReactElement<any>;
-  options?: Options;
+  options?: Options<RowData>;
   parentChildData?: (row: RowData, rows: RowData[]) => RowData | undefined;
   localization?: Localization;
   onChangeRowsPerPage?: (pageSize: number) => void;
@@ -187,7 +188,7 @@ export interface Icons {
   ViewColumn?: React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>;
 }
 
-export interface Options {
+export interface Options<RowData extends object> {
   actionsCellStyle?: React.CSSProperties;
   actionsColumnIndex?: number;
   addRowPosition?: ('first' | 'last');
@@ -232,7 +233,8 @@ export interface Options {
   searchFieldStyle?: React.CSSProperties;
   selection?: boolean;
   selectionProps?: any | ((data: any) => any);
-  selectionDisabledIcon?: JSX.Element,
+  selectionDisabled?: (data: RowData) => boolean,
+  selectionDisabledIcon?: ReactNode,
   sorting?: boolean;
   tableLayout?: 'auto' | 'fixed';
   thirdSortClick?: boolean;
