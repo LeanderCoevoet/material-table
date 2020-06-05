@@ -158,6 +158,14 @@ export const propTypes = {
     toolbar: PropTypes.bool,
     thirdSortClick: PropTypes.bool
   }),
+  draggable: PropTypes.shape({
+    disableDefaultDragDropContext: PropTypes.bool,
+    isDraggableHeaderActive: PropTypes.bool,
+    isDraggableRowActive: PropTypes.bool,
+    droppableHeaderId: PropTypes.string,
+    droppableRowId: PropTypes.string,
+    onDragEnd: PropTypes.func,
+  }),
   localization: PropTypes.shape({
     grouping: PropTypes.shape({
       groupedBy: PropTypes.string,
@@ -184,5 +192,5 @@ export const propTypes = {
   tableRef: PropTypes.any,
   style: PropTypes.object,
   page: PropTypes.number,
-  totalCount: PropTypes.number
+  totalCount: PropTypes.number,
 };
