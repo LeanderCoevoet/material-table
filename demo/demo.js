@@ -507,11 +507,11 @@ class App extends Component {
         {/*<DragDropContext onDragEnd={this.onDragEnd}>*/}
         <MaterialTable
           draggable={{
-            disableDefaultDragDropContext: false,
-            isDraggableHeaderActive: true,
+            // disableDefaultDragDropContext: false,
+            // isDraggableHeaderActive: true,
             isDraggableRowActive: true,
-            droppableHeaderId: 'headers',
-            droppableRowId: 'rows',
+            // droppableHeaderId: 'headers',
+            // droppableRowId: 'rows',
             // onDragEnd: (result) => this.onDragEnd(result),
           }}
           options={{

@@ -132,6 +132,7 @@ export default class MaterialTable extends React.Component {
     calculatedProps.components = { ...MaterialTable.defaultProps.components, ...calculatedProps.components };
     calculatedProps.icons = { ...MaterialTable.defaultProps.icons, ...calculatedProps.icons };
     calculatedProps.options = { ...MaterialTable.defaultProps.options, ...calculatedProps.options };
+    calculatedProps.draggable = { ...MaterialTable.defaultProps.draggable, ...calculatedProps.draggable };
 
     const localization = { ...MaterialTable.defaultProps.localization.body, ...calculatedProps.localization.body };
 
