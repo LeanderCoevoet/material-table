@@ -67,6 +67,7 @@ export const defaultProps = {
         Clear: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>clear</Icon>),
         Delete: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>delete_outline</Icon>),
         DetailPanel: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>chevron_right</Icon>),
+        Drag: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>drag_indicator</Icon>),
         Edit: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>edit</Icon>),
         Export: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>save_alt</Icon>),
         Filter: React.forwardRef((props, ref) => <Icon {...props} ref={ref}>filter_list</Icon>),

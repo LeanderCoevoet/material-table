@@ -2,4 +2,4 @@ export const ConditionalWrapper = ({condition, wrapperSuccess, children, wrapper
     return condition ? wrapperSuccess(children) :
         wrapperNotSuccess ? wrapperNotSuccess(children)
             : children;
-}
+};

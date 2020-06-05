@@ -295,8 +295,6 @@ export default class MaterialTable extends React.Component {
     }
 
     onDragEnd = result => {
-        console.log("onDragEndMT ", result)
-
         if (!result || !result.source || !result.destination) return;
 
         this.dataManager.changeByDrag(result);
@@ -306,7 +304,7 @@ export default class MaterialTable extends React.Component {
                 this.props.onColumnDragged(result.source.index, result.destination.index);
             }
         });
-        if (this.props.draggable.onDragEnd) this.props.draggable.onDragEnd(result)
+        if (this.props.draggable.onDragEnd) this.props.draggable.onDragEnd(result);
     }
 
     onGroupExpandChanged = (path) => {
@@ -700,7 +698,7 @@ export default class MaterialTable extends React.Component {
                         <DragDropContext onDragEnd={this.onDragEnd} nonce={props.draggable.cspNonce}>
                             {children}
                         </DragDropContext>
-                    )
+                    );
                 }}
             >
                 <props.components.Container style={{position: 'relative', ...props.style}}>
@@ -709,7 +707,7 @@ export default class MaterialTable extends React.Component {
                         actions={props.actions}
                         components={props.components}
                         selectedRows={this.state.selectedCount > 0 ? this.state.originalData.filter(a => {
-                            return a.tableData.checked
+                            return a.tableData.checked;
                         }) : []}
                         columns={this.state.columns}
                         columnsButton={props.options.columnsButton}

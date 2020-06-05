@@ -522,7 +522,7 @@ class App extends Component {
             }],
         columns: [
             {title: 'Adı', field: 'name', filterPlaceholder: 'Adı filter', tooltip: 'This is tooltip text'},
-            {width: 200, title: 'Soyadı', field: 'surname', initialEditValue: 'test', tooltip: 'This is tooltip text'},
+            {title: 'Soyadı', field: 'surname', initialEditValue: 'test', tooltip: 'This is tooltip text'},
             {title: 'Evli', field: 'isMarried'},
             {title: 'Cinsiyet', field: 'sex', disableClick: true, editable: 'onAdd'},
             {title: 'Tipi', field: 'type', removable: false, editable: 'never'},
@@ -540,7 +540,7 @@ class App extends Component {
      * source arrays stored in the state.
      */
     id2List = {
-        droppableRow: 'items',
+        rows: 'items',
         droppable2: 'selected'
     };
 
@@ -582,7 +582,7 @@ class App extends Component {
             );
 
             this.setState({
-                items: result.droppableRow,
+                items: result.rows,
                 selected: result.droppable2
             });
         }
@@ -601,8 +601,8 @@ class App extends Component {
                             isDraggableHeaderActive: true,
                             isDraggableRowActive: true,
                             droppableHeaderId: "headers",
-                            droppableRowId: "droppableRow",
-                            onDragEnd: (result) => this.onDragEnd(result),
+                            droppableRowId: "rows",
+                            // onDragEnd: (result) => this.onDragEnd(result),
                         }}
                         options={{
                             search: false,

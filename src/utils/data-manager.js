@@ -58,7 +58,7 @@ export default class DataManager {
     this.filtered = false;
   }
 
-  setColumns(columns) {    
+  setColumns(columns) {
     const undefinedWidthColumns = columns.filter(c => c.width === undefined);
     let usedWidth = ["0px"];
 
@@ -67,8 +67,8 @@ export default class DataManager {
         columnOrder: index,
         filterValue: columnDef.defaultFilter,
         groupOrder: columnDef.defaultGroupOrder,
-        groupSort: columnDef.defaultGroupSort || 'asc',     
-        width: columnDef.width,   
+        groupSort: columnDef.defaultGroupSort || 'asc',
+        width: columnDef.width,
         ...columnDef.tableData,
         id: index,
       };
@@ -269,6 +269,13 @@ export default class DataManager {
     this.detailPanelType = type;
   }
 
+  reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
   changeByDrag(result) {
     let start = 0;
 
@@ -351,6 +358,16 @@ export default class DataManager {
       }
 
       return;
+    }
+    else if (result.destination.droppableId === "rows" && result.source.droppableId === "rows"){
+        const items = this.reorder(
+          this.data,
+          result.source.index,
+          result.destination.index
+        );
+        this.setData(items)
+
+        return;
     }
     else {
       return;

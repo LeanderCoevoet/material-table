@@ -4,6 +4,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import {Draggable} from "react-beautiful-dnd";
 
 /* eslint-enable no-unused-vars */
 
@@ -52,7 +53,7 @@ class MTableBody extends React.Component {
                 return (
                     <this.props.components.EditRow
                         columns={this.props.columns.filter(columnDef => {
-                            return !columnDef.hidden
+                            return !columnDef.hidden;
                         })}
                         components={this.props.components}
                         data={data}
@@ -167,7 +168,7 @@ class MTableBody extends React.Component {
                 {this.props.showAddRow && this.props.options.addRowPosition === "first" &&
                 <this.props.components.EditRow
                     columns={this.props.columns.filter(columnDef => {
-                        return !columnDef.hidden
+                        return !columnDef.hidden;
                     })}
                     data={this.props.initialFormData}
                     components={this.props.components}
@@ -192,7 +193,7 @@ class MTableBody extends React.Component {
                 {this.props.showAddRow && this.props.options.addRowPosition === "last" &&
                 <this.props.components.EditRow
                     columns={this.props.columns.filter(columnDef => {
-                        return !columnDef.hidden
+                        return !columnDef.hidden;
                     })}
                     data={this.props.initialFormData}
                     components={this.props.components}

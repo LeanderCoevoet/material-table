@@ -44,8 +44,10 @@ export default class MTableBodyRow extends React.Component {
                 boxSizing: 'border-box', ...this.props.options.actionsCellStyle
             }}>
                 <div style={{display: 'flex'}}>
-                    <this.props.components.Actions data={this.props.data} actions={actions}
-                                                   components={this.props.components} size={size}
+                    <this.props.components.Actions data={this.props.data}
+                                                   actions={actions}
+                                                   components={this.props.components}
+                                                   size={size}
                                                    disabled={this.props.hasAnyEditingRow}/>
                 </div>
             </TableCell>
@@ -56,7 +58,7 @@ export default class MTableBodyRow extends React.Component {
         // some basic styles to make the items look a bit nicer
         userSelect: 'none',
         // padding: '8px 16px',
-        margin: `0 ${8}px 0 0`,
+        margin: `${8}px ${8}px 0 0`,
 
         // change background colour if dragging
         // background: isDragging ? 'lightgreen' : 'grey',
@@ -78,8 +80,7 @@ export default class MTableBodyRow extends React.Component {
 
     renderDraggable() {
         const size = CommonValues.elementSize(this.props);
-        const actions = CommonValues.rowActions(this.props);
-        const width = actions.length * CommonValues.baseIconSize(this.props);
+        const width = CommonValues.baseIconSize(this.props);
 
         return (
             <TableCell size={size} padding="none" key="key-actions-column" style={{
@@ -93,12 +94,13 @@ export default class MTableBodyRow extends React.Component {
                     key={`${this.props.draggable.droppableRowId}.${this.props.data.id.toString()}`}
                 >
                     {(provided, snapshot) => (
-                        <div ref={provided.innerRef}
-                             {...provided.draggableProps}
-                             {...provided.dragHandleProps}
-                             style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={this.getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                         >
-                            Draggable
+                            <this.props.icons.Drag/>
                         </div>
                     )}
                 </Draggable>
@@ -380,7 +382,7 @@ export default class MTableBodyRow extends React.Component {
                         return (
                             <this.props.components.EditRow
                                 columns={this.props.columns.filter(columnDef => {
-                                    return !columnDef.hidden
+                                    return !columnDef.hidden;
                                 })}
                                 components={this.props.components}
                                 data={data}
