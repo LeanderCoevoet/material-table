@@ -56,7 +56,7 @@ export const defaultProps = {
   draggable: {
     disableDefaultDragDropContext: false,
     isDraggableHeaderActive: true,
-    isDraggableRowActive: true,
+    isDraggableRowActive: false,
     droppableHeaderId: 'headers',
     droppableRowId: 'rows',
   },

@@ -46,7 +46,7 @@ class MTableBody extends React.Component {
       );
     }
   }
-  
+
   renderUngroupedRows(renderData) {
     return renderData.map((data, index) => {
       if (data.tableData.editing) {
@@ -103,7 +103,7 @@ class MTableBody extends React.Component {
       }
     });
   }
-  
+
   renderGroupedRows(groups, renderData) {
     return renderData.map((groupData, index) => (
       <this.props.components.GroupRow
@@ -132,18 +132,18 @@ class MTableBody extends React.Component {
       />
     ));
   }
-  
+
   render() {
     let renderData = this.props.renderData;
     const groups = this.props.columns
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
-    
+
     let emptyRowCount = 0;
     if (this.props.options.paging) {
       emptyRowCount = this.props.pageSize - renderData.length;
     }
-    
+
     return (
       <TableBody>
         {this.props.options.filtering &&
@@ -164,7 +164,7 @@ class MTableBody extends React.Component {
           hideFilterIcons={this.props.options.hideFilterIcons}
         />
         }
-        
+
         {this.props.showAddRow && this.props.options.addRowPosition === 'first' &&
         <this.props.components.EditRow
           columns={this.props.columns.filter(columnDef => {
@@ -184,12 +184,12 @@ class MTableBody extends React.Component {
           getFieldValue={this.props.getFieldValue}
         />
         }
-        
+
         {groups.length > 0 ?
           this.renderGroupedRows(groups, renderData) :
           this.renderUngroupedRows(renderData)
         }
-        
+
         {this.props.showAddRow && this.props.options.addRowPosition === 'last' &&
         <this.props.components.EditRow
           columns={this.props.columns.filter(columnDef => {

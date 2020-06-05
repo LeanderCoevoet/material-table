@@ -14,21 +14,21 @@ import * as CommonValues from '../utils/common-values';
 /* eslint-enable no-unused-vars */
 
 export class MTableHeader extends React.Component {
-  
+
   renderHeader() {
     const size = this.props.options.padding === 'default' ? 'medium' : 'small';
-    
+
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
-        
+
         let content = columnDef.title;
-        
+
         if (this.props.draggable.isDraggableHeaderActive) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
-              draggableId={`${this.props.draggable.droppableHeaderId}.${columnDef.tableData.id.toString()}`}
+              draggableId={`${this.props.draggable.droppableHeaderId}.${columnDef.tableData.id}`}
               index={index}
               type={this.props.draggable.droppableHeaderId}>
               {(provided, snapshot) => (
@@ -43,7 +43,7 @@ export class MTableHeader extends React.Component {
             </Draggable>
           );
         }
-        
+
         if (columnDef.sorting !== false && this.props.sorting) {
           content = (
             <TableSortLabel
@@ -70,11 +70,11 @@ export class MTableHeader extends React.Component {
             </TableSortLabel>
           );
         }
-        
+
         if (columnDef.tooltip) {
           content = <Tooltip title={columnDef.tooltip}><span>{content}</span></Tooltip>;
         }
-        
+
         return (
           <TableCell
             key={columnDef.tableData.id}
@@ -93,7 +93,7 @@ export class MTableHeader extends React.Component {
       });
     return mapArr;
   }
-  
+
   renderActionsHeader() {
     const localization = { ...MTableHeader.defaultProps.localization, ...this.props.localization };
     const width = CommonValues.actionsColumnWidth(this.props);
@@ -108,7 +108,7 @@ export class MTableHeader extends React.Component {
       </TableCell>
     );
   }
-  
+
   renderDraggableHeader() {
     const width = CommonValues.actionsColumnWidth(this.props);
     return (
@@ -122,10 +122,10 @@ export class MTableHeader extends React.Component {
       </TableCell>
     );
   }
-  
+
   renderSelectionHeader() {
     const selectionWidth = CommonValues.selectionMaxWidth(this.props, this.props.treeDataMaxLevel);
-    
+
     return (
       <TableCell
         padding="none"
@@ -143,7 +143,7 @@ export class MTableHeader extends React.Component {
       </TableCell>
     );
   }
-  
+
   renderDetailPanelColumnCell() {
     return <TableCell
       padding="none"
@@ -152,13 +152,13 @@ export class MTableHeader extends React.Component {
       style={{ ...this.props.headerStyle }}
     />;
   }
-  
+
   render() {
     const headers = this.renderHeader();
     if (this.props.hasSelection) {
       headers.splice(0, 0, this.renderSelectionHeader());
     }
-    
+
     if (this.props.showActionsColumn) {
       if (this.props.actionsHeaderIndex >= 0) {
         let endPos = 0;
@@ -170,11 +170,11 @@ export class MTableHeader extends React.Component {
         headers.push(this.renderActionsHeader());
       }
     }
-    
+
     if (this.props.draggable.isDraggableRowActive) {
       headers.push(this.renderDraggableHeader());
     }
-    
+
     if (this.props.hasDetailPanel) {
       if (this.props.detailPanelColumnAlignment === 'right') {
         headers.push(this.renderDetailPanelColumnCell());
@@ -182,7 +182,7 @@ export class MTableHeader extends React.Component {
         headers.splice(0, 0, this.renderDetailPanelColumnCell());
       }
     }
-    
+
     if (this.props.isTreeData > 0) {
       headers.splice(0, 0,
         <TableCell
@@ -193,14 +193,14 @@ export class MTableHeader extends React.Component {
         />
       );
     }
-    
+
     this.props.columns
       .filter(columnDef => columnDef.tableData.groupOrder > -1)
       .forEach(columnDef => {
         headers.splice(0, 0, <TableCell padding="checkbox" key={'key-group-header' + columnDef.tableData.id}
                                         className={this.props.classes.header}/>);
       });
-    
+
     return (
       <TableHead>
         <TableRow>

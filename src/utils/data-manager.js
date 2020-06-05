@@ -6,7 +6,7 @@ export default class DataManager {
   applySearch = false;
   applySort = false;
   currentPage = 0;
-  detailPanelType = 'multiple'
+  detailPanelType = 'multiple';
   lastDetailPanelRow = undefined;
   lastEditingRow = undefined;
   orderBy = -1;
@@ -20,7 +20,7 @@ export default class DataManager {
   treeDataMaxLevel = 0;
   groupedDataLength = 0;
   defaultExpanded = false;
-  
+
   data = [];
   columns = [];
 
@@ -60,7 +60,7 @@ export default class DataManager {
 
   setColumns(columns) {
     const undefinedWidthColumns = columns.filter(c => c.width === undefined);
-    let usedWidth = ["0px"];
+    let usedWidth = ['0px'];
 
     this.columns = columns.map((columnDef, index) => {
       columnDef.tableData = {
@@ -73,11 +73,10 @@ export default class DataManager {
         id: index,
       };
 
-      if(columnDef.width !== undefined) {
-        if(typeof columnDef.width === "number") {
-          usedWidth.push(columnDef.width + "px");
-        }
-        else {
+      if (columnDef.width !== undefined) {
+        if (typeof columnDef.width === 'number') {
+          usedWidth.push(columnDef.width + 'px');
+        } else {
           usedWidth.push(columnDef.width);
         }
       }
@@ -85,7 +84,7 @@ export default class DataManager {
       return columnDef;
     });
 
-    usedWidth = "(" + usedWidth.join(' + ') + ")";
+    usedWidth = '(' + usedWidth.join(' + ') + ')';
     undefinedWidthColumns.forEach(columnDef => {
       columnDef.tableData.width = `calc((100% - ${usedWidth}) / ${undefinedWidthColumns.length})`;
     });
@@ -161,8 +160,7 @@ export default class DataManager {
 
     if ((rowData.tableData.showDetailPanel || '').toString() === render.toString()) {
       rowData.tableData.showDetailPanel = undefined;
-    }
-    else {
+    } else {
       rowData.tableData.showDetailPanel = render;
     }
 
@@ -194,12 +192,10 @@ export default class DataManager {
 
       if (mode) {
         this.lastEditingRow = rowData;
-      }
-      else {
+      } else {
         this.lastEditingRow = undefined;
       }
-    }
-    else if (this.lastEditingRow) {
+    } else if (this.lastEditingRow) {
       this.lastEditingRow.tableData.editing = undefined;
       this.lastEditingRow = undefined;
     }
@@ -207,13 +203,12 @@ export default class DataManager {
 
   changeAllSelected(checked) {
     let selectedCount = 0;
-    if (this.isDataType("group")) {
+    if (this.isDataType('group')) {
       const setCheck = (data) => {
         data.forEach(element => {
           if (element.groups.length > 0) {
             setCheck(element.groups);
-          }
-          else {
+          } else {
             element.data.forEach(d => {
               d.tableData.checked = checked;
               selectedCount++;
@@ -223,8 +218,7 @@ export default class DataManager {
       };
 
       setCheck(this.groupedData);
-    }
-    else {
+    } else {
       this.searchedData.map(row => {
         row.tableData.checked = checked;
         return row;
@@ -248,15 +242,14 @@ export default class DataManager {
 
     if (column.tableData.groupSort === 'asc') {
       column.tableData.groupSort = 'desc';
-    }
-    else {
+    } else {
       column.tableData.groupSort = 'asc';
     }
 
     this.sorted = false;
   }
 
-    changeColumnHidden(column, hidden) {
+  changeColumnHidden(column, hidden) {
     column.hidden = hidden;
   }
 
@@ -283,8 +276,7 @@ export default class DataManager {
       .filter(col => col.tableData.groupOrder > -1)
       .sort((col1, col2) => col1.tableData.groupOrder - col2.tableData.groupOrder);
 
-
-    if (result.destination.droppableId === "groups" && result.source.droppableId === "groups") {
+    if (result.destination.droppableId === 'groups' && result.source.droppableId === 'groups') {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
 
@@ -294,14 +286,12 @@ export default class DataManager {
         // Take last and add as first
         const last = groups.pop();
         groups.unshift(last);
-      }
-      else {
+      } else {
         // Take first and add as last
         const last = groups.shift();
         groups.push(last);
       }
-    }
-    else if (result.destination.droppableId === "groups" && result.source.droppableId === "headers") {
+    } else if (result.destination.droppableId === 'groups' && result.source.droppableId === 'headers') {
       const newGroup = this.columns.find(c => c.tableData.id == result.draggableId);
 
       if (newGroup.grouping === false || !newGroup.field) {
@@ -309,20 +299,18 @@ export default class DataManager {
       }
 
       groups.splice(result.destination.index, 0, newGroup);
-    }
-    else if (result.destination.droppableId === "headers" && result.source.droppableId === "groups") {
+    } else if (result.destination.droppableId === 'headers' && result.source.droppableId === 'groups') {
       const removeGroup = this.columns.find(c => c.tableData.id == result.draggableId);
       removeGroup.tableData.groupOrder = undefined;
       groups.splice(result.source.index, 1);
-    }
-    else if (result.destination.droppableId === "headers" && result.source.droppableId === "headers") {
+    } else if (result.destination.droppableId === 'headers' && result.source.droppableId === 'headers') {
       start = Math.min(result.destination.index, result.source.index);
       const end = Math.max(result.destination.index, result.source.index);
 
       // get the effective start and end considering hidden columns
       const sorted = this.columns
-          .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
-          .filter(column => column.tableData.groupOrder === undefined);
+        .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
+        .filter(column => column.tableData.groupOrder === undefined);
       let numHiddenBeforeStart = 0;
       let numVisibleBeforeStart = 0;
       for (let i = 0; i < sorted.length && numVisibleBeforeStart <= start; i++) {
@@ -346,8 +334,7 @@ export default class DataManager {
         // Take last and add as first
         const last = colsToMov.pop();
         colsToMov.unshift(last);
-      }
-      else {
+      } else {
         // Take first and add as last
         const last = colsToMov.shift();
         colsToMov.push(last);
@@ -358,18 +345,16 @@ export default class DataManager {
       }
 
       return;
-    }
-    else if (result.destination.droppableId === "rows" && result.source.droppableId === "rows"){
-        const items = this.reorder(
-          this.data,
-          result.source.index,
-          result.destination.index
-        );
-        this.setData(items);
+    } else if (result.destination.droppableId === 'rows' && result.source.droppableId === 'rows') {
+      const items = this.reorder(
+        this.data,
+        result.source.index,
+        result.destination.index
+      );
+      this.setData(items);
 
-        return;
-    }
-    else {
+      return;
+    } else {
       return;
     }
 
@@ -391,10 +376,10 @@ export default class DataManager {
         currentRow = parent;
       }
     });
-  }
+  };
 
   findDataByPath = (renderData, path) => {
-    if (this.isDataType("tree")) {
+    if (this.isDataType('tree')) {
       const node = path.reduce((result, current) => {
         return (
           result &&
@@ -405,24 +390,21 @@ export default class DataManager {
       }, { tableData: { childRows: renderData } });
 
       return node;
-    }
-    else {
+    } else {
       const data = { groups: renderData };
 
       const node = path.reduce((result, current) => {
         if (result.groups.length > 0) {
           return result.groups[current];
-        }
-        else if (result.data) {
+        } else if (result.data) {
           return result.data[current];
-        }
-        else {
+        } else {
           return undefined;
         }
       }, data);
       return node;
     }
-  }
+  };
 
   findGroupByGroupPath(renderData, path) {
     const data = { groups: renderData, groupsIndex: this.rootGroupsIndex };
@@ -449,16 +431,15 @@ export default class DataManager {
     }
 
     return value;
-  }
+  };
 
   isDataType(type) {
-    let dataType = "normal";
+    let dataType = 'normal';
 
     if (this.parentFunc) {
-      dataType = "tree";
-    }
-    else if (this.columns.find(a => a.tableData.groupOrder > -1)) {
-      dataType = "group";
+      dataType = 'tree';
+    } else if (this.columns.find(a => a.tableData.groupOrder > -1)) {
+      dataType = 'group';
     }
 
     return type === dataType;
@@ -483,12 +464,10 @@ export default class DataManager {
     if (columnDef.customSort) {
       if (this.orderDirection === 'desc') {
         result = list.sort((a, b) => columnDef.customSort(b, a, 'row'));
-      }
-      else {
+      } else {
         result = list.sort((a, b) => columnDef.customSort(a, b, 'row'));
       }
-    }
-    else {
+    } else {
       result = list.sort(
         this.orderDirection === 'desc'
           ? (a, b) => this.sort(this.getFieldValue(b, columnDef), this.getFieldValue(a, columnDef), columnDef.type)
@@ -508,11 +487,11 @@ export default class DataManager {
       this.searchData();
     }
 
-    if (this.grouped === false && this.isDataType("group")) {
+    if (this.grouped === false && this.isDataType('group')) {
       this.groupData();
     }
 
-    if (this.treefied === false && this.isDataType("tree")) {
+    if (this.treefied === false && this.isDataType('tree')) {
       this.treefyData();
     }
 
@@ -540,7 +519,7 @@ export default class DataManager {
       treeDataMaxLevel: this.treeDataMaxLevel,
       groupedDataLength: this.groupedDataLength
     };
-  }
+  };
 
   // =====================================================================================================
   // DATA MANUPULATIONS
@@ -556,8 +535,7 @@ export default class DataManager {
         const { lookup, type, tableData } = columnDef;
         if (columnDef.customFilterAndSearch) {
           this.filteredData = this.filteredData.filter(row => !!columnDef.customFilterAndSearch(tableData.filterValue, row, columnDef));
-        }
-        else {
+        } else {
           if (lookup) {
             this.filteredData = this.filteredData.filter(row => {
               const value = this.getFieldValue(row, columnDef, false);
@@ -568,7 +546,7 @@ export default class DataManager {
           } else if (type === 'numeric') {
             this.filteredData = this.filteredData.filter(row => {
               const value = this.getFieldValue(row, columnDef);
-              return (value + "") === tableData.filterValue;
+              return (value + '') === tableData.filterValue;
             });
           } else if (type === 'boolean' && tableData.filterValue) {
             this.filteredData = this.filteredData.filter(row => {
@@ -626,7 +604,7 @@ export default class DataManager {
     }
 
     this.filtered = true;
-  }
+  };
 
   searchData = () => {
     this.grouped = this.treefied = this.sorted = this.paged = false;
@@ -640,8 +618,7 @@ export default class DataManager {
           .some(columnDef => {
             if (columnDef.customFilterAndSearch) {
               return !!columnDef.customFilterAndSearch(this.searchText, row, columnDef);
-            }
-            else if (columnDef.field) {
+            } else if (columnDef.field) {
               const value = this.getFieldValue(row, columnDef);
               if (value) {
                 return value.toString().toUpperCase().includes(this.searchText.toUpperCase());
@@ -651,7 +628,7 @@ export default class DataManager {
       });
     }
     this.searched = true;
-  }
+  };
 
   groupData() {
     this.sorted = this.paged = false;
@@ -675,7 +652,7 @@ export default class DataManager {
 
         if (!group) {
           const path = [...(o.path || []), value];
-          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : false };
+          let oldGroup = this.findGroupByGroupPath(this.groupedData, path) || { isExpanded: (typeof this.defaultExpanded === 'boolean') ? this.defaultExpanded : false };
 
           group = { value, groups: [], groupsIndex: {}, data: [], isExpanded: oldGroup.isExpanded, path: path };
           o.groups.push(group);
@@ -726,8 +703,7 @@ export default class DataManager {
 
         rowData.tableData.path = [...parent.tableData.path, parent.tableData.childRows.length - 1];
         this.treeDataMaxLevel = Math.max(this.treeDataMaxLevel, rowData.tableData.path.length);
-      }
-      else {
+      } else {
         if (!this.treefiedData.includes(rowData)) {
           this.treefiedData.push(rowData);
           this.treefiedDataLength++;
@@ -764,7 +740,7 @@ export default class DataManager {
     this.data.forEach(rowData => {
       if (!this.searchText && !this.columns.some(columnDef => columnDef.tableData.filterValue)) {
         if (rowData.tableData.isTreeExpanded === undefined) {
-          var isExpanded = (typeof this.defaultExpanded ==='boolean') ? this.defaultExpanded : this.defaultExpanded(rowData);
+          var isExpanded = (typeof this.defaultExpanded === 'boolean') ? this.defaultExpanded : this.defaultExpanded(rowData);
           rowData.tableData.isTreeExpanded = isExpanded;
         }
       }
@@ -800,7 +776,7 @@ export default class DataManager {
   sortData() {
     this.paged = false;
 
-    if (this.isDataType("group")) {
+    if (this.isDataType('group')) {
       this.sortedData = [...this.groupedData];
 
       const groups = this.columns
@@ -814,8 +790,7 @@ export default class DataManager {
               ? (a, b) => columnDef.customSort(b.value, a.value, 'group')
               : (a, b) => columnDef.customSort(a.value, b.value, 'group')
           );
-        }
-        else {
+        } else {
           return list.sort(
             columnDef.tableData.groupSort === 'desc'
               ? (a, b) => this.sort(b.value, a.value, columnDef.type)
@@ -832,8 +807,7 @@ export default class DataManager {
             const column = groups[level];
             element.groups = sortGroups(element.groups, column);
             sortGroupData(element.groups, level + 1);
-          }
-          else {
+          } else {
             if (this.orderBy >= 0 && this.orderDirection) {
               element.data = this.sortList(element.data);
             }
@@ -842,8 +816,7 @@ export default class DataManager {
       };
 
       sortGroupData(this.sortedData, 1);
-    }
-    else if (this.isDataType("tree")) {
+    } else if (this.isDataType('tree')) {
       this.sortedData = [...this.treefiedData];
       if (this.orderBy != -1) {
         this.sortedData = this.sortList(this.sortedData);
@@ -859,8 +832,7 @@ export default class DataManager {
 
         sortTree(this.sortedData);
       }
-    }
-    else if (this.isDataType("normal")) {
+    } else if (this.isDataType('normal')) {
       this.sortedData = [...this.searchedData];
       if (this.orderBy != -1 && this.applySort) {
         this.sortedData = this.sortList(this.sortedData);
