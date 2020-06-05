@@ -88,9 +88,9 @@ export default class MTableBodyRow extends React.Component {
         boxSizing: 'border-box', ...this.props.options.actionsCellStyle
       }}>
         <Draggable
-          draggableId={`${this.props.draggable.droppableRowId}.${this.props.data.id}`}
+          draggableId={`${this.props.draggable.droppableRowId}.${this.props.data.tableData.id}`}
           index={this.props.data.tableData.id}
-          key={`${this.props.draggable.droppableRowId}.${this.props.data.id}`}
+          key={`${this.props.draggable.droppableRowId}.${this.props.data.tableData.id}`}
         >
           {(provided, snapshot) => (
             <div
