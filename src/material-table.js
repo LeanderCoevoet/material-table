@@ -442,7 +442,11 @@ export default class MaterialTable extends React.Component {
       };
 
       findSelecteds(this.state.originalData);
-      this.props.onSelectionChange(selectedRows, dataClicked);
+      this.props.onSelectionChange(selectedRows.map(r => {
+        const d = { ...r };
+        delete d.tableData;
+        return d;
+      }), dataClicked);
     }
   }
 
